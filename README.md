@@ -1,47 +1,42 @@
 # Gujarati Dialect Detection (Text & Speech)
 
 ## Task
-Binary dialect classification: **Standard** vs **Kathiawadi** Gujarati.
+Binary dialect classification: Standard vs Kathiawadi Gujarati.
 
 ## Motivation
-Low-resource Indian dialects are under-studied, especially in multimodal settings. Standard NLP tools often fail on dialectal variations present in social media text and in-the-wild speech. This project explores the effectiveness of Transformer-based models (MuRIL and Wav2Vec2) for this task.
+Low-resource Indian dialects are under-studied, especially in multimodal settings. This project explores the fusion of linguistic (text) and acoustic (speech) signals to improve dialect identification in noisy, real-world environments.
 
 ## Dataset
-- **Text**: ~1500 samples collected from YouTube comments & transcripts.
-- **Audio**: ~75 in-the-wild clips (5–10s duration), totaling ~8 minutes of speech.
-- **Labels**: Semi-automated keyword-based extraction with partial manual verification.
-- *Note: Data is not released publicly due to licensing restrictions.*
+- **Text:** ~1500 samples collected from YouTube comments & transcripts.
+- **Audio:** 75 in-the-wild clips (approx. 5–10s each).
+- **Labels:** Semi-automated acquisition with partial manual verification.
+- **Note:** Dataset is not released publicly due to licensing restrictions.
 
 ## Models
-### Text
-- **TF-IDF + SVM**: Baseline approach.
-- **MuRIL (fine-tuned)**: Large-scale pretrained model optimized for Indian languages.
+**Text:**
+- TF-IDF + SVM (Baseline)
+- MuRIL (Multilingual Representations for Indian Languages) - Fine-tuned
 
-### Audio
-- **MFCC + SVM**: Baseline acoustic feature approach.
-- **Wav2Vec2-XLSR (fine-tuned)**: Self-supervised model for cross-lingual speech representation.
+**Audio:**
+- MFCC + SVM (Baseline)
+- Wav2Vec2-XLSR-53 (Meta) - Fine-tuned on Gujarati speech
 
 ## Experiments
-- **Text-only**: Comparing BERT-based representations vs statistical baselines.
-- **Audio-only**: Assessing Wav2Vec2's robustness to background noise.
-- **Decision-level fusion**: Combining predictions to handle modality-specific ambiguity.
+1. **Text-only:** Evaluation of MuRIL on short, informal text.
+2. **Audio-only:** Evaluation of Wav2Vec2 on noisy, in-the-wild audio segments.
+3. **Fusion:** Preliminary exploration of decision-level fusion strategies.
 
 ## Results
-(Preliminary Results)
-| Modality | Model | Accuracy |
-| :--- | :--- | :--- |
-| Text | MuRIL | ~95% |
-| Audio | Wav2Vec2 | ~85% |
+*Summary of preliminary findings (Metrics to be added)*
 
 ## Limitations
-- **Small Audio Dataset**: Limited diversity in speakers and recording conditions.
-- **Noisy Labels**: Weak supervision from video metadata leads to occasional mislabeling.
-- **Unpaired Data**: Text and audio samples are independent; no synchronized specific transcripts.
+- Small audio dataset size relative to text.
+- Noisy labels inherent in semi-automated data collection.
+- Independent (unpaired) text and audio samples used for training.
 
 ## Reproducibility
-- Seeds and configurations are defined in `src/config.py` (if applicable) or training scripts.
-- Training scripts: `src/train_muril.py`, `src/models/train_wav2vec2.py`.
+- Seed fixed for experimentation: `42`
+- Codebase includes training scripts, data augmentation pipelines, and inference logic.
 
 ## Demo (Optional)
-A Streamlit-based UI is included for demonstration.
-Run `python -m streamlit run src/app.py`
+A minimal Streamlit interface (`src/app.py`) is included to demonstrate the inference pipeline.
